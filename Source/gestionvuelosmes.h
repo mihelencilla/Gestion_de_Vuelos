@@ -40,7 +40,6 @@ typedef struct TipoGestion{
   private:
     bool ComprobarNumVuelos();
     bool VueloExiste(TipoVectorVuelos arrayVuelos, TipoCodigo &codigo);
-    bool ComprobarNumVuelos();
     //bool ComprobarDatos(TipoVuelo vueloAux);
  };
 

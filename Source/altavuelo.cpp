@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include "gestionvuelosmes.h"
 
+int numVuelos = 0;
+
 void TipoGestion::InicializarVuelo (TipoVuelo &vuelo) { // Procedimiento para inicializar un vuelo
   strcpy(vuelo.codigoVuelo, "" );
   strcpy(vuelo.hora, "" );
@@ -85,7 +87,7 @@ void TipoGestion::AltaNuevoVuelo(TipoVectorVuelos arrayVuelos) {
       printf("El vuelo ya existe");
     }
     else{
-      IntroducirDatos (arrayVuelos, vueloAux);
+      arrayVuelos[numVuelos] = vueloAux;
     }
   }
   else{

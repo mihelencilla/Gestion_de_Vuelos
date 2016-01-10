@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 #include "gestionvuelosmes.h"
 
 
@@ -16,6 +18,7 @@ int main() {
   char opcion;
   TipoVectorVuelos arrayVuelos;
   TipoGestion vuelosMes;
+  int numVuelos = 0;
 
   vuelosMes.InicializarArrayVuelos(arrayVuelos);
 
@@ -44,6 +47,8 @@ int main() {
     case 'a':
 
       vuelosMes.AltaNuevoVuelo(arrayVuelos);
+      numVuelos++;
+      printf("%d", &numVuelos);
       break;
 
     case 'O':
