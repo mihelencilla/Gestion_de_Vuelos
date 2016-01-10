@@ -8,7 +8,10 @@
 #pragma once
 
 const int maxVuelos = 1200;
+const int maxVuelosMes = 50;
+const int minAnyo = 2016;
 const int maxAnyo = 2017;
+
 extern int numVuelos;
 
 typedef char TipoCodigo[6];
@@ -29,6 +32,15 @@ typedef TipoVuelo TipoVectorVuelos[maxVuelos];
 
 typedef struct TipoGestion{
 
+  void InicializarArrayVuelos (TipoVectorVuelos arrayVuelos);
+  void InicializarVuelo (TipoVuelo &vuelo);
   void AltaNuevoVuelo(TipoVectorVuelos arrayVuelos);
+  void OfertasMes(TipoVectorVuelos arrayVuelos);
+
+  private:
+    bool ComprobarNumVuelos();
+    bool VueloExiste(TipoVectorVuelos arrayVuelos, TipoCodigo &codigo);
+    bool ComprobarNumVuelos();
+    //bool ComprobarDatos(TipoVuelo vueloAux);
  };
 
