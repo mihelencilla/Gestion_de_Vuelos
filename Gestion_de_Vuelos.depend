@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1452427729 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\practica_4.cpp
+	<stdio.h>
+	<locale.h>
+	<stdlib.h>
+	"vuelos.h"
+
+1452430124 c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\vuelos.h
+

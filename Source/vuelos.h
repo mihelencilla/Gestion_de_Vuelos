@@ -29,7 +29,6 @@ typedef TipoVuelo TipoVectorVuelos[maxVuelos];
 
 typedef struct TipoGestion{
 
-  int hola;
   void AltaNuevoVuelo(TipoVectorVuelos arrayVuelos);
  };
 
