@@ -17,14 +17,18 @@ extern int numVuelos;
 typedef char TipoCodigo[6];
 typedef char TipoHora[5];
 
-typedef struct TipoVuelo {
-    TipoCodigo codigoVuelo;
-    TipoHora hora;
+typedef struct TipoFecha{
     int dia;
     int mes;
     int anyo;
+};
+
+typedef struct TipoVuelo {
+    TipoCodigo codigoVuelo;
+    TipoHora hora;
+    TipoFecha fecha;
     int plazasTotales;
-    int plazasCompradas;
+    int plazasDisponibles;
     int precioinicial;
   };
 
@@ -36,10 +40,16 @@ typedef struct TipoGestion{
   void InicializarVuelo (TipoVuelo &vuelo);
   void AltaNuevoVuelo(TipoVectorVuelos arrayVuelos);
   void OfertasMes(TipoVectorVuelos arrayVuelos);
+  void ComprarPlazas (TipoVectorVuelos arrayVuelos);
+  void OrdenarArrayVuelos (TipoVectorVuelos arrayVuelos, int numero);
 
   private:
-    bool ComprobarNumVuelos();
+    bool ComprobarNumVuelos(TipoVectorVuelos arrayVuelos);
     bool VueloExiste(TipoVectorVuelos arrayVuelos, TipoCodigo &codigo);
-    //bool ComprobarDatos(TipoVuelo vueloAux);
+    bool RealizarCompra (TipoVectorVuelos arrayVuelos, int vueloAux, int plazasAux);
+    bool HayVuelosDisponibles(TipoVectorVuelos arrayVuelos, int &diaAux, int &mesAux, int &anyoAux);
+    void MostrarVuelosDisponibles(TipoVectorVuelos arrayVuelos, int &diaAux, int &mesAux, int &anyoAux);
+    bool EsPosterior(TipoVuelo v1, TipoVuelo v2);
+    int RecalcularPrecio (int plazasTotalesAux, int plazasDisponiblesAux, int precioInicialAux);
  };
 

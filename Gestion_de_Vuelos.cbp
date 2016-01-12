@@ -23,6 +23,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Source\altavuelo.cpp" />
+		<Unit filename="Source\comprarplazas.cpp" />
 		<Unit filename="Source\gestionvuelosmes.h" />
 		<Unit filename="Source\ofertasdelmes.cpp" />
 		<Unit filename="Source\practica_4.cpp" />

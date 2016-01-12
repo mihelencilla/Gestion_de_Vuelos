@@ -12,15 +12,13 @@
 #include <string.h>
 #include "gestionvuelosmes.h"
 
-
 int main() {
 
   char opcion;
   TipoVectorVuelos arrayVuelos;
-  TipoGestion vuelosMes;
-  int numVuelos = 0;
+  TipoGestion gestionVuelosMes;
 
-  vuelosMes.InicializarArrayVuelos(arrayVuelos);
+  gestionVuelosMes.InicializarArrayVuelos(arrayVuelos);
 
   do {
 
@@ -46,9 +44,7 @@ int main() {
     case 'A':
     case 'a':
 
-      vuelosMes.AltaNuevoVuelo(arrayVuelos);
-      numVuelos++;
-      printf("%d", &numVuelos);
+      gestionVuelosMes.AltaNuevoVuelo(arrayVuelos);
       break;
 
     case 'O':
@@ -62,7 +58,7 @@ int main() {
     case 'c':
 
       system("cls");
-      //ComprarPlazas();
+      gestionVuelosMes.ComprarPlazas(arrayVuelos);
       break;
 
     case 'V':

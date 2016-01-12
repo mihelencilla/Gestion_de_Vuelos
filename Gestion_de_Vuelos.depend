@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1452446228 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\practica_4.cpp
+1452541258 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\practica_4.cpp
 	<stdio.h>
 	<locale.h>
 	<stdlib.h>
@@ -13,9 +13,16 @@
 	<stdio.h>
 	"gestionvuelosmes.h"
 
-1452445358 c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\gestionvuelosmes.h
+1452641002 c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\gestionvuelosmes.h
 
-1452446098 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\altavuelo.cpp
+1452638603 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\altavuelo.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<stdlib.h>
+	"gestionvuelosmes.h"
+
+1452640687 source:c:\users\helen\desktop\proyectogit\gestion_de_vuelos\source\comprarplazas.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
