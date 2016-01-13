@@ -82,5 +82,7 @@ $RECYCLE.BIN/
 
 *.exe
 *.o
+.depend
+.layout
 *.depend
 *.layout

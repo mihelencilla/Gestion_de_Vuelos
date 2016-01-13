@@ -32,7 +32,7 @@ int main() {
     printf("       Alta Nuevo Vuelo          (pulsar A)\n");
     printf("       Ofertas del Mes           (pulsar O)\n");
     printf("       Comprar Plazas            (pulsar C)\n");
-    printf("       Vuelos de Mes             (pulsar V)\n");
+    printf("       Vuelos del Mes            (pulsar V)\n");
     printf("       Salir                     (pulsar S)\n\n");
     printf(" Teclear una opción válida (A|O|C|V|S)? ");
 
@@ -43,7 +43,7 @@ int main() {
 
     case 'A':
     case 'a':
-
+      system("cls");
       gestionVuelosMes.AltaNuevoVuelo(arrayVuelos);
       break;
 
@@ -51,7 +51,7 @@ int main() {
     case 'o':
 
       system("cls");
-      //OfertasDelMes();
+      gestionVuelosMes.OfertasMes(arrayVuelos);
       break;
 
     case 'C':
@@ -65,7 +65,7 @@ int main() {
     case 'v':
 
       system("cls");
-      //VuelosDelMes();
+      gestionVuelosMes.VisualizarVuelosDelMes(arrayVuelos);
       break;
 
     case 'S':
