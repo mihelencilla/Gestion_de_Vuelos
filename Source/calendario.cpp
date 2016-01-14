@@ -5,119 +5,127 @@
 #include "calendario.h"
 
 
-int CalcularBisiestos(int &mes, int &anyo){
-  int numBisiestos;
-  numBisiestos=0;
-  for (int i=1601;i<anyo;i++){
-    if ((i%4==0)&&(i%100!=0)){
-      numBisiestos ++;
-    }else{
-      if (i%400==0){
-        numBisiestos++;
-      }
-    }
-  }
-  if ((anyo%4==0)&&(anyo%100!=0)){	//cálculo de bisiesto para el año y mes pasados por parámetro
-    if(mes>2){
-      numBisiestos++;
-    }
-  }else{
-    if ((anyo%400==0)&&(mes>2)){
-      numBisiestos++;
-    }
-  }
-return numBisiestos;
-}
-int CalcularDias(int &mes){ //calcula el incremento de dias
+int TipoCalendario::CalcularDias(int mes){ //calcula los dias que tiene el mes pasado por parámetro
   switch(mes){
     case 1:
-    case 10:
-    return 0;
-    break;
-    case 2:
     case 3:
-    case 11:
-    return 3;
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+    return 31;
     break;
     case 4:
-    case 7:
-    return 6;
-    break;
-    case 5:
-    return 1;
-    break;
     case 6:
-    return 4;
-    break;
-    case 8:
-    return 2;
+    case 9:
+    case 11:
+    return 30;
     break;
     default:
-    return 5;
+    return 28;
   }
 }
-void ImprimirCalendario(int &mes, int &anyo, TipoDia diaSemana){
-  int indiceFila;
-  int indiceMes;
+
+TipoDia TipoCalendario::CalcularDiaSemana (int mes, int anyo) { // El calendario español empieza en lunes
+  int a, y ,m;
+  int aux;
+  TipoDia dia;
+
+  a = (14 - mes) / 12;
+  y = anyo - a;
+  m = mes + 12 * a - 2;
+
+  aux = (1 + y + y / 4 - y / 100 + y / 400 + (31 * m) / 12) % 7;
+
+  if (aux == 0) {
+    aux = 6;
+    } else {
+      aux--;
+    }
+  dia = TipoDia (aux);
+  return dia;
+}
+
+TipoSemanas TipoCalendario::CalcularNumSemanas (int dias, int primero) {
+  TipoSemanas semanas;
+  int cociente, modulo;
+
+  cociente = (dias + primero) / 7;
+  modulo = (dias + primero) % 7;
+
+  if (modulo == 0) {
+    semanas.semanas = cociente;
+  } else {
+    semanas.semanas = cociente + 1;
+  }
+  semanas.resto = (semanas.semanas * 7 - (dias + primero) );    /* dias que faltan para completar la última semana */
+  return semanas;
+}
+
+void TipoCalendario::ImprimirSeparador (int &columna, int &fila, int semanas) {
+  if ( columna == 7 ) {
+    if ( fila < semanas) {       /* La última fila no lleva salto de línea */
+      printf( "\n" );
+    };
+    columna = 1;
+    fila++;
+  } else if ( columna == 5 ) {
+    printf( " | " );
+    columna++;
+  } else {
+    printf( "  " );
+    columna++;
+  };
+}
+
+void TipoCalendario::VisualizarCalendarioVuelosMes(TipoVectorVuelos arrayVuelos, int mes, int anyo, TipoDia diaSemana){
   int diaInicial;
   int diaFinal;
-  printf("\n");
+  TipoSemanas numSemanas;
+  int numEspacios;
+  int fila,columna, ind;
+  bool hayVuelo = false;
+  diaFinal = CalcularDias (mes);
+  if (anyo == 2016 && mes == 2){
+    diaFinal = diaFinal+1;
+  }
   switch (mes){
     case 1:
     printf("ENERO                  ");
-    diaFinal=31;
     break;
     case 2:
     printf("FEBRERO                ");
-    if ((anyo%4==0)&&(anyo%100!=0)){
-      diaFinal=29;
-    }else{
-      if (anyo%400==0){
-        diaFinal=29;
-      }else{
-        diaFinal=28;
-      }
-    }
     break;
     case 3:
     printf("MARZO                  ");
-    diaFinal=31;
     break;
     case 4:
     printf("ABRIL                  ");
-    diaFinal=30;
     break;
     case 5:
     printf("MAYO                   ");
-    diaFinal=31;
     break;
     case 6:
     printf("JUNIO                  ");
-    diaFinal=30;
     break;
     case 7:
     printf("JULIO                  ");
-    diaFinal=31;
     break;
     case 8:
     printf("AGOSTO                 ");
-    diaFinal=31;
     break;
     case 9:
     printf("SEPTIEMBRE             ");
-    diaFinal=30;
     break;
     case 10:
     printf("OCTUBRE                ");
-    diaFinal=31;
     break;
     case 11:
     printf("NOVIEMBRE              ");
-    diaFinal=30;
     break;
     case 12:
     printf("DICIEMBRE              ");
-    diaFinal=31;
     break;
   }
   printf("%d",anyo);
@@ -126,123 +134,41 @@ void ImprimirCalendario(int &mes, int &anyo, TipoDia diaSemana){
   printf("LU  MA  MI  JU  VI | SA  DO\n");
   printf("===========================\n");
 
-  switch (diaSemana){	//Imprime un calendario distinto en funcion del dia de la semana en la que empieza el mes
-    case Lunes:
-    diaInicial=1;
-    printf(" 1   2   3   4   5 |  6   7\n");
-    printf(" 8   9  10  11  12 | 13  14\n");
-    printf("15  16  17  18  19 | 20  21\n");
-    if (diaFinal==28){
-      printf("22  23  24  25  26 | 27  28\n");
-    }else if (diaFinal==29){
-      printf("22  23  24  25  26 | 27  28\n");
-      printf("29   .   .   .   . |  .   .\n");
-    }else if (diaFinal==30){
-      printf("22  23  24  25  26 | 27  28\n");
-      printf("29  30   .   .   . |  .   .\n");
-    }else{
-      printf("22  23  24  25  26 | 27  28\n");
-      printf("29  30  31   .   . |  .   .\n");
+  numEspacios = 0;
+  columna = 1;
+  fila = 1;
+  numSemanas = CalcularNumSemanas(diaFinal, int(diaSemana));
+
+  while (fila <= numSemanas.semanas) {          /* Cada fila es una semana */
+      if ( fila == 1 ) {
+        for (int i=1; i <= diaSemana; i++) {       /* Primera fila: puntos iniciales*/
+          printf( " ." );
+          ImprimirSeparador (columna,fila,numSemanas.semanas);
+        }
+      }
+      for ( int i = 1; i <= diaFinal; i++ ) {               /* Días del mes */
+        for (int j = 0; j < numVuelos; j++) {
+          if ((arrayVuelos[j].fecha.anyo == anyo)
+              && (arrayVuelos[j].fecha.mes == mes)
+              && (arrayVuelos[j].fecha.dia == i)) {
+            ind = j;
+            hayVuelo = true;
+          }
+        }
+        if (hayVuelo) {
+          printf("%2d", i);           // Si hay vuelo imprime el día y si no hay vuelo imprime --
+        } else {
+          printf("--");
+        }
+        hayVuelo = false;
+        ImprimirSeparador (columna,fila,numSemanas.semanas);
+      }
+      if (fila == numSemanas.semanas) {
+        for ( int i = 1; i <= numSemanas.resto; i++ ) {     // última fila
+          printf (" .");
+          ImprimirSeparador (columna, fila, numSemanas.semanas );
+        }
+      }
     }
-    break;
-    case Martes:
-    diaInicial=2;
-    printf(" .   1   2   3   4 |  5   6\n");
-    printf(" 7   8   9  10  11 | 12  13\n");
-    printf("14  15  16  17  18 | 19  20\n");
-    printf("21  22  23  24  25 | 26  27\n");
-    if (diaFinal==28){
-      printf("28   .   .   .   . |  .   .\n");
-    }else if (diaFinal==29){
-      printf("28  29   .   .   . |  .   .\n");
-    }else if (diaFinal==30){
-      printf("28  29  30   .   . |  .   .\n");
-    }else{
-      printf("28  29  30  31   . |  .   .\n");
-    }
-    break;
-    case Miercoles:
-    diaInicial=3;
-    printf(" .   .   1   2   3 |  4   5\n");
-    printf(" 6   7   8   9  10 | 11  12\n");
-    printf("13  14  15  16  17 | 18  19\n");
-    printf("20  21  22  23  24 | 25  26\n");
-    if (diaFinal==28){
-      printf("27  28   .   .   . |  .   .\n");
-    }else if (diaFinal==29){
-      printf("27  28  29   .   . |  .   .\n");
-    }else if (diaFinal==30){
-      printf("27  28  29  30   . |  .   .\n");
-    }else{
-      printf("27  28  29  30  31 |  .   .\n");
-    }
-    break;
-    case Jueves:
-    diaInicial=4;
-    printf(" .   .   .   1   2 |  3   4\n");
-    printf(" 5   6   7   8   9 | 10  11\n");
-    printf("12  13  14  15  16 | 17  18\n");
-    printf("19  20  21  22  23 | 24  25\n");
-    if (diaFinal==28){
-      printf("26  27  28   .   . |  .   .\n");
-    }else if (diaFinal==29){
-      printf("26  27  28  29   . |  .   .\n");
-    }else if (diaFinal==30){
-      printf("26  27  28  29  30 |  .   .\n");
-    }else{
-      printf("26  27  28  29  30 | 31   .\n");
-    }
-    break;
-    case Viernes:
-    diaInicial=5;
-    printf(" .   .   .   .   1 |  2   3\n");
-    printf(" 4   5   6   7   8 |  9  10\n");
-    printf("11  12  13  14  15 | 16  17\n");
-    printf("18  19  20  21  22 | 23  24\n");
-    if (diaFinal==28){
-      printf("25  26  27  28   . |  .   .\n");
-    }else if (diaFinal==29){
-      printf("25  26  27  28  29 |  .   .\n");
-    }else if (diaFinal==30){
-      printf("25  26  27  28  29 | 30   .\n");
-    }else{
-      printf("25  26  27  28  29 | 30  31\n");
-    }
-    break;
-    case Sabado:
-    diaInicial=6;
-    printf(" .   .   .   .   . |  1   2\n");
-    printf(" 3   4   5   6   7 |  8   9\n");
-    printf("10  11  12  13  14 | 15  16\n");
-    printf("17  18  19  20  21 | 22  23\n");
-    if (diaFinal==28){
-      printf("24  25  26  27  28 |  .   .\n");
-    }else if (diaFinal==29){
-      printf("24  25  26  27  28 | 29   .\n");
-    }else if (diaFinal==30){
-      printf("24  25  26  27  28 | 29  30\n");
-    }else{
-      printf("24  25  26  27  28 | 29  30\n");
-      printf("31   .   .   .   . |  .   .\n");
-    }
-    break;
-    case Domingo:
-    diaInicial=7;
-    printf(" .   .   .   .   . |  .   1\n");
-    printf(" 2   3   4   5   6 |  7   8\n");
-    printf(" 9  10  11  12  13 | 14  15\n");
-    printf("16  17  18  19  20 | 21  22\n");
-    if (diaFinal==28){
-      printf("23  24  25  26  27 | 28   .\n");
-    }else if (diaFinal==29){
-      printf("23  24  25  26  27 | 28  29\n");
-    }else if (diaFinal==30){
-      printf("23  24  25  26  27 | 28  29\n");
-      printf("30   .   .   .   . |  .   .\n");
-    }else{
-      printf("23  24  25  26  27 | 28  29\n");
-      printf("30  31   .   .   . |  .   .\n");
-    }
-    break;
-  }
+    printf("\n");
 }
